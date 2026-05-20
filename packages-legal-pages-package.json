@@ -1,0 +1,25 @@
+{
+  "name": "@chaicodes/legal-pages",
+  "version": "1.0.0",
+  "description": "Reusable About Page and Terms & Conditions components for Chaicodes applications",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "legal",
+    "about",
+    "terms",
+    "conditions",
+    "react",
+    "components"
+  ],
+  "author": "ChAI Wang",
+  "license": "MIT",
+  "peerDependencies": {
+    "react": "^16.0.0 || ^17.0.0 || ^18.0.0"
+  },
+  "devDependencies": {
+    "react": "^18.0.0"
+  }
+}
