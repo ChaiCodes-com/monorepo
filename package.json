@@ -1,0 +1,24 @@
+﻿{
+  "name": "chaicodes",
+  "version": "1.0.0",
+  "description": "ChAI Codes - Shared packages and applications",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "install-all": "npm install",
+    "build": "npm run build --workspaces",
+    "test": "npm run test --workspaces",
+    "dev": "npm run dev --workspaces"
+  },
+  "keywords": [
+    "stripe",
+    "payments",
+    "legal",
+    "react"
+  ],
+  "author": "ChAI Wang",
+  "license": "MIT"
+}
