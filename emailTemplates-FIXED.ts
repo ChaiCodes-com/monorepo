@@ -1,14 +1,21 @@
 /**
- * emailTemplates.js
+ * emailTemplates.ts
  * Default and custom email templates for access codes
  */
+
+interface EmailTemplateParams {
+  appName?: string;
+  supportEmail?: string;
+  appUrl?: string;
+  brandColor?: string;
+}
 
 export function getDefaultEmailTemplate({
   appName = 'ChAICodes',
   supportEmail = 'support@chaicodes.com',
   appUrl = 'https://chaicodes.com',
   brandColor = '#C8102E',
-} = {}) {
+}: EmailTemplateParams = {}): string {
   return `
     <!DOCTYPE html>
     <html>
@@ -115,7 +122,7 @@ export function getDefaultEmailTemplate({
   `;
 }
 
-export function buildCustomEmailTemplate(templateFn) {
+export function buildCustomEmailTemplate(templateFn: (() => string) | any): any {
   if (typeof templateFn !== 'function') {
     throw new Error('Template must be a function');
   }

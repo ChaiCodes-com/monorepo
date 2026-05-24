@@ -1,14 +1,19 @@
 /**
- * AboutPage.jsx
+ * AboutPage.tsx
  * Full-page About component showing ChAICodes branding
  * Can be used as a dedicated /about page
  */
 
-import React from 'react';
-import { CHAICODES_BRANDING, SHARED_STYLES } from '../shared/branding.js';
+import type { CSSProperties } from 'react';
+import { CHAICODES_BRANDING } from '../shared/branding.js';
 
-export function AboutPage({ appName = null, appLogo = null }) {
-  const bgStyle = {
+interface AboutPageProps {
+  appName?: string | null;
+  appLogo?: string | null;
+}
+
+export function AboutPage({ appName = null, appLogo = null }: AboutPageProps) {
+  const bgStyle: CSSProperties = {
     minHeight: '100vh',
     background: 'radial-gradient(ellipse at 15% 0%, rgba(200,16,46,0.14) 0%, transparent 45%), radial-gradient(ellipse at 85% 100%, rgba(145,163,176,0.07) 0%, transparent 45%), linear-gradient(160deg, #1a1214 0%, #221518 45%, #1a1214 100%)',
     fontFamily: "'Lora', Georgia, serif",
@@ -16,7 +21,7 @@ export function AboutPage({ appName = null, appLogo = null }) {
     padding: '60px 16px',
   };
 
-  const containerStyle = {
+  const containerStyle: CSSProperties = {
     maxWidth: 820,
     margin: '0 auto',
     background: 'rgba(30,16,18,0.88)',
@@ -26,12 +31,12 @@ export function AboutPage({ appName = null, appLogo = null }) {
     boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
   };
 
-  const headerStyle = {
+  const headerStyle: CSSProperties = {
     textAlign: 'center',
     marginBottom: 40,
-  };
+  } as const;
 
-  const sealStyle = {
+  const sealStyle: CSSProperties = {
     width: 80,
     height: 80,
     margin: '0 auto 20px',
@@ -47,7 +52,7 @@ export function AboutPage({ appName = null, appLogo = null }) {
     fontWeight: 700,
   };
 
-  const titleStyle = {
+  const titleStyle: CSSProperties = {
     fontFamily: "'Playfair Display',serif",
     fontSize: 32,
     fontWeight: 700,
@@ -56,7 +61,7 @@ export function AboutPage({ appName = null, appLogo = null }) {
     margin: '0 0 8px',
   };
 
-  const subtitleStyle = {
+  const subtitleStyle: CSSProperties = {
     fontFamily: "'Cormorant Garamond',serif",
     fontSize: 14,
     color: '#91A3B0',
@@ -65,18 +70,18 @@ export function AboutPage({ appName = null, appLogo = null }) {
     margin: 0,
   };
 
-  const dividerLineStyle = {
+  const dividerLineStyle: CSSProperties = {
     width: 120,
     height: 1,
     background: 'linear-gradient(90deg,transparent,#C8102E,transparent)',
     margin: '16px auto 0',
   };
 
-  const sectionStyle = {
+  const sectionStyle: CSSProperties = {
     marginBottom: 32,
   };
 
-  const sectionTitleStyle = {
+  const sectionTitleStyle: CSSProperties = {
     fontFamily: "'Playfair Display',serif",
     fontSize: 18,
     fontWeight: 700,
@@ -87,32 +92,29 @@ export function AboutPage({ appName = null, appLogo = null }) {
     paddingBottom: 12,
   };
 
-  const paragraphStyle = {
+  const paragraphStyle: CSSProperties = {
     fontSize: 14,
     lineHeight: 1.8,
     color: '#e2d8d4',
     marginBottom: 12,
   };
 
-  const linkStyle = {
+  const linkStyle: CSSProperties = {
     color: '#C8102E',
     textDecoration: 'none',
     fontWeight: 600,
-    '&:hover': {
-      textDecoration: 'underline',
-    },
   };
 
-  const featureListStyle = {
+  const featureListStyle: CSSProperties = {
     listStyle: 'none',
     display: 'flex',
     flexDirection: 'column',
     gap: 12,
     padding: 0,
     margin: '16px 0',
-  };
+  } as const;
 
-  const featureItemStyle = {
+  const featureItemStyle: CSSProperties = {
     display: 'flex',
     gap: 12,
     fontSize: 13,
@@ -120,19 +122,19 @@ export function AboutPage({ appName = null, appLogo = null }) {
     lineHeight: 1.6,
   };
 
-  const featureIconStyle = {
+  const featureIconStyle: CSSProperties = {
     color: 'rgba(200,16,46,0.6)',
     flexShrink: 0,
   };
 
-  const footerStyle = {
+  const footerStyle: CSSProperties = {
     marginTop: 40,
     paddingTop: 24,
     borderTop: '1px solid rgba(200,16,46,0.15)',
     textAlign: 'center',
-  };
+  } as const;
 
-  const copyrightStyle = {
+  const copyrightStyle: CSSProperties = {
     fontFamily: "'Cormorant Garamond',serif",
     fontSize: 11,
     color: '#4a5560',

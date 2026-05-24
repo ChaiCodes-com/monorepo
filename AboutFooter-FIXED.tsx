@@ -1,16 +1,23 @@
 /**
- * AboutFooter.jsx
+ * AboutFooter.tsx
  * Compact About component for footer or sidebar placement
  * Shows ChAICodes branding in minimal space
  */
 
-import React, { useState } from 'react';
-import { CHAICODES_BRANDING, SHARED_STYLES } from '../shared/branding.js';
+import { useState } from 'react';
+import type { CSSProperties } from 'react';
+import { CHAICODES_BRANDING } from '../shared/branding.js';
 
-export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null }) {
+interface AboutFooterProps {
+  appName?: string | null;
+  appLogo?: string | null;
+  onLearnMore?: (() => void) | null;
+}
+
+export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null }: AboutFooterProps) {
   const [expanded, setExpanded] = useState(false);
 
-  const footerStyle = {
+  const footerStyle: CSSProperties = {
     background: 'rgba(30,16,18,0.88)',
     border: '1px solid rgba(200,16,46,0.15)',
     borderRadius: 4,
@@ -19,20 +26,20 @@ export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null
     textAlign: 'center',
   };
 
-  const compactStyle = {
+  const compactStyle: CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
     gap: 8,
     alignItems: 'center',
   };
 
-  const sealStyle = {
+  const sealStyle: CSSProperties = {
     fontSize: 24,
     color: '#C8102E',
     fontWeight: 700,
   };
 
-  const titleStyle = {
+  const titleStyle: CSSProperties = {
     fontFamily: "'Playfair Display',serif",
     fontSize: 14,
     fontWeight: 700,
@@ -41,7 +48,7 @@ export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null
     margin: 0,
   };
 
-  const textStyle = {
+  const textStyle: CSSProperties = {
     fontFamily: "'Lora',serif",
     fontSize: 12,
     color: '#8a9aa8',
@@ -49,7 +56,7 @@ export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null
     margin: '8px 0 0 0',
   };
 
-  const linkButtonStyle = {
+  const linkButtonStyle: CSSProperties = {
     background: 'none',
     border: 'none',
     color: '#91A3B0',
@@ -58,12 +65,11 @@ export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null
     letterSpacing: '0.1em',
     cursor: 'pointer',
     textDecoration: 'underline',
-    textDecorationColor: 'rgba(74,85,96,0.4)',
     marginTop: 8,
     padding: 0,
   };
 
-  const emailStyle = {
+  const emailStyle: CSSProperties = {
     fontFamily: "'Lora',serif",
     fontSize: 11,
     color: '#91A3B0',
@@ -71,7 +77,7 @@ export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null
     marginTop: 4,
   };
 
-  const copyrightStyle = {
+  const copyrightStyle: CSSProperties = {
     fontFamily: "'Cormorant Garamond',serif",
     fontSize: 10,
     color: '#2e3640',
@@ -81,7 +87,7 @@ export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null
     borderTop: '1px solid rgba(200,16,46,0.1)',
   };
 
-  const expandedSectionStyle = {
+  const expandedSectionStyle: CSSProperties = {
     background: 'rgba(10,4,5,0.5)',
     border: '1px solid rgba(145,163,176,0.15)',
     borderRadius: 3,
@@ -90,7 +96,7 @@ export function AboutFooter({ appName = null, appLogo = null, onLearnMore = null
     textAlign: 'left',
   };
 
-  const expandedTextStyle = {
+  const expandedTextStyle: CSSProperties = {
     fontFamily: "'Lora',serif",
     fontSize: 12,
     color: '#b8b0ac',

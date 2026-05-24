@@ -1,10 +1,26 @@
 /**
- * handleStripeWebhook.js
+ * handleStripeWebhook.ts
  * Main webhook handler that routes to appropriate handlers
  */
 
 import { handleCheckoutCompleted } from './handleCheckoutCompleted.js';
 import { handleSubscriptionUpdated, handleSubscriptionDeleted } from './subscriptionHandlers.js';
+
+interface WebhookParams {
+  body: string;
+  signature: string;
+  stripeSecretKey: string;
+  supabaseClient: any;
+  config?: Record<string, any>;
+}
+
+interface WebhookResponse {
+  success: boolean;
+  error?: string;
+  statusCode: number;
+  subscription?: string;
+  message?: string;
+}
 
 export async function handleStripeWebhook({
   body,
@@ -12,15 +28,16 @@ export async function handleStripeWebhook({
   stripeSecretKey,
   supabaseClient,
   config = {},
-}) {
+}: WebhookParams): Promise<WebhookResponse> {
   const stripe = require('stripe')(stripeSecretKey);
 
-  let event;
+  let event: any;
 
   try {
     event = stripe.webhooks.constructEvent(body, signature, process.env.STRIPE_WEBHOOK_SECRET);
   } catch (err) {
-    console.error('Webhook signature verification failed:', err.message);
+    const message = err instanceof Error ? err.message : String(err);
+    console.error('Webhook signature verification failed:', message);
     return {
       success: false,
       error: 'Invalid signature',
@@ -65,10 +82,11 @@ export async function handleStripeWebhook({
         return { success: true, statusCode: 200 };
     }
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error('Error handling webhook:', error);
     return {
       success: false,
-      error: error.message,
+      error: message,
       statusCode: 500,
     };
   }

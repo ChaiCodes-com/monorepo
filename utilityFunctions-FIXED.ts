@@ -1,9 +1,9 @@
 /**
- * utilityFunctions.js
+ * utilityFunctions.ts
  * Helper utility functions for stripe-helpers
  */
 
-export function generateAccessCode(email, prefix = 'SUB') {
+export function generateAccessCode(email: string, prefix: string = 'SUB'): string {
   if (!email) {
     throw new Error('Email is required to generate access code');
   }
@@ -19,9 +19,9 @@ export function generateAccessCode(email, prefix = 'SUB') {
   return `${prefix}-${namePart}-${randomPart}`;
 }
 
-export function calculateExpiryDate(billingPeriod = 'annual') {
+export function calculateExpiryDate(billingPeriod: string = 'annual'): string {
   const now = new Date();
-  let expiresAt;
+  let expiresAt: Date;
 
   if (billingPeriod === 'monthly') {
     expiresAt = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000);
@@ -34,7 +34,7 @@ export function calculateExpiryDate(billingPeriod = 'annual') {
   return expiresAt.toISOString();
 }
 
-export function getDaysRemaining(expiresAt) {
+export function getDaysRemaining(expiresAt: string | null): number | null {
   if (!expiresAt) {
     return null;
   }
@@ -47,16 +47,16 @@ export function getDaysRemaining(expiresAt) {
   return Math.max(0, diffDays);
 }
 
-export function formatPrice(cents) {
+export function formatPrice(cents: number): string {
   return (cents / 100).toFixed(2);
 }
 
-export function validateEmail(email) {
+export function validateEmail(email: string): boolean {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-export function validateAccessCode(code) {
+export function validateAccessCode(code: string): boolean {
   // Access codes should be in format: PREFIX-NAME-RANDOM
   return /^[A-Z]+-[A-Z0-9]+-[A-Z0-9]+$/.test(code);
 }

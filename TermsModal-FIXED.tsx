@@ -1,19 +1,26 @@
 /**
- * TermsModal.jsx
+ * TermsModal.tsx
  * Modal version of Terms & Conditions
  * Can be opened/closed by parent component
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import type { CSSProperties } from 'react';
 import { CHAICODES_BRANDING } from '../shared/branding.js';
 
-export function TermsModal({ appName = 'Our Application', isOpen = true, onClose = () => {} }) {
-  const contentRef = useRef(null);
+interface TermsModalProps {
+  appName?: string;
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function TermsModal({ appName = 'Our Application', isOpen = true, onClose = () => {} }: TermsModalProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
 
   // Don't render if not open
   if (!isOpen) return null;
 
-  const overlayStyle = {
+  const overlayStyle: CSSProperties = {
     position: 'fixed',
     inset: 0,
     zIndex: 1000,
@@ -24,7 +31,7 @@ export function TermsModal({ appName = 'Our Application', isOpen = true, onClose
     padding: '24px 16px',
   };
 
-  const modalStyle = {
+  const modalStyle: CSSProperties = {
     maxWidth: 600,
     width: '100%',
     background: 'linear-gradient(160deg,#221518,#1a1214)',
@@ -38,7 +45,7 @@ export function TermsModal({ appName = 'Our Application', isOpen = true, onClose
     flexDirection: 'column',
   };
 
-  const closeButtonStyle = {
+  const closeButtonStyle: CSSProperties = {
     position: 'absolute',
     top: 14,
     right: 16,
@@ -52,11 +59,11 @@ export function TermsModal({ appName = 'Our Application', isOpen = true, onClose
     fontFamily: "'Cormorant Garamond',serif",
   };
 
-  const headerStyle = {
+  const headerStyle: CSSProperties = {
     marginBottom: 22,
   };
 
-  const titleStyle = {
+  const titleStyle: CSSProperties = {
     fontFamily: "'Playfair Display',serif",
     fontSize: 18,
     fontWeight: 700,
@@ -64,21 +71,21 @@ export function TermsModal({ appName = 'Our Application', isOpen = true, onClose
     letterSpacing: '0.04em',
   };
 
-  const dividerStyle = {
+  const dividerStyle: CSSProperties = {
     width: 80,
     height: 1,
     background: 'linear-gradient(90deg,transparent,#C8102E,transparent)',
     margin: '12px 0 0',
   };
 
-  const contentWrapperStyle = {
+  const contentWrapperStyle: CSSProperties = {
     flex: 1,
     overflowY: 'auto',
     paddingRight: '12px',
     marginBottom: '20px',
   };
 
-  const sectionTitleStyle = {
+  const sectionTitleStyle: CSSProperties = {
     color: '#C8102E',
     marginTop: 20,
     marginBottom: 10,
@@ -86,7 +93,7 @@ export function TermsModal({ appName = 'Our Application', isOpen = true, onClose
     fontWeight: 700,
   };
 
-  const textStyle = {
+  const textStyle: CSSProperties = {
     marginBottom: 12,
     fontFamily: "'Lora',serif",
     fontSize: 13,
@@ -94,12 +101,12 @@ export function TermsModal({ appName = 'Our Application', isOpen = true, onClose
     color: '#e2d8d4',
   };
 
-  const highlightStyle = {
+  const highlightStyle: CSSProperties = {
     color: '#91A3B0',
     fontWeight: 600,
   };
 
-  const closeModalStyle = {
+  const closeModalStyle: CSSProperties = {
     display: 'block',
     width: '100%',
     padding: '11px 24px',

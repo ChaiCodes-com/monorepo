@@ -1,7 +1,22 @@
 /**
- * handlePriceSwitching.js
+ * handlePriceSwitching.ts
  * Handles subscription price changes (monthly to annual or vice versa)
  */
+
+interface PriceSwitchingParams {
+  stripe: any;
+  subscriptionId: string;
+  newPriceId: string;
+  billingPeriod?: 'annual' | 'monthly';
+  proRate?: boolean;
+}
+
+interface PriceSwitchingResponse {
+  success: boolean;
+  subscription?: any;
+  message?: string;
+  error?: string;
+}
 
 export async function handlePriceSwitching({
   stripe,
@@ -9,7 +24,7 @@ export async function handlePriceSwitching({
   newPriceId,
   billingPeriod = 'annual',
   proRate = true,
-}) {
+}: PriceSwitchingParams): Promise<PriceSwitchingResponse> {
   if (!stripe) {
     throw new Error('Stripe client is required');
   }
@@ -58,10 +73,11 @@ export async function handlePriceSwitching({
       message: `Subscription updated to ${billingPeriod} billing`,
     };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error('Error switching subscription price:', error);
     return {
       success: false,
-      error: error.message,
+      error: message,
     };
   }
 }

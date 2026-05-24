@@ -1,15 +1,29 @@
 /**
- * subscriptionHandlers.js
+ * subscriptionHandlers.ts
  * Handles subscription.updated and subscription.deleted webhook events
  */
 
 import { updateAccessCodeStatus } from '../database/databaseUtilities.js';
 
+interface SubscriptionHandlerParams {
+  event: any;
+  supabaseClient: any;
+  config?: Record<string, any>;
+}
+
+interface SubscriptionHandlerResponse {
+  success: boolean;
+  statusCode: number;
+  subscription?: string;
+  status?: string;
+  error?: string;
+  message?: string;
+}
+
 export async function handleSubscriptionUpdated({
   event,
   supabaseClient,
-  config = {},
-}) {
+}: SubscriptionHandlerParams): Promise<SubscriptionHandlerResponse> {
   const subscription = event.data.object;
 
   try {
@@ -32,10 +46,11 @@ export async function handleSubscriptionUpdated({
       status: subscription.status,
     };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error('Error handling subscription update:', error);
     return {
       success: false,
-      error: error.message,
+      error: message,
       statusCode: 500,
     };
   }
@@ -44,8 +59,7 @@ export async function handleSubscriptionUpdated({
 export async function handleSubscriptionDeleted({
   event,
   supabaseClient,
-  config = {},
-}) {
+}: SubscriptionHandlerParams): Promise<SubscriptionHandlerResponse> {
   const subscription = event.data.object;
 
   try {
@@ -64,10 +78,11 @@ export async function handleSubscriptionDeleted({
       message: 'Subscription cancelled and access revoked',
     };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error('Error handling subscription deletion:', error);
     return {
       success: false,
-      error: error.message,
+      error: message,
       statusCode: 500,
     };
   }

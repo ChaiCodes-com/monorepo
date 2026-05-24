@@ -1,24 +1,23 @@
-﻿{
+{
   "name": "chaicodes",
   "version": "1.0.0",
-  "description": "ChAI Codes - Shared packages and applications",
+  "description": "Chaicodes monorepo - shared packages and apps",
   "private": true,
   "workspaces": [
     "packages/*",
     "apps/*"
   ],
   "scripts": {
-    "install-all": "npm install",
     "build": "npm run build --workspaces",
-    "test": "npm run test --workspaces",
-    "dev": "npm run dev --workspaces"
+    "build:packages": "npm run build --workspace=packages/stripe-helpers --workspace=packages/legal-pages",
+    "dev": "npm run dev --workspaces",
+    "clean": "npm run clean --workspaces",
+    "install:all": "npm install && npm run build:packages"
   },
-  "keywords": [
-    "stripe",
-    "payments",
-    "legal",
-    "react"
-  ],
-  "author": "ChAI Wang",
-  "license": "MIT"
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "@types/react": "^19.2.15",
+    "@types/react-dom": "^19.2.3",
+    "typescript": "^5.0.0"
+  }
 }

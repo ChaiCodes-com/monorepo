@@ -1,16 +1,38 @@
 /**
- * handleCheckoutCompleted.js
+ * handleCheckoutCompleted.ts
  * Handles checkout.session.completed webhook event
  */
 
-import { createAccessCode, incrementAccessCodeUses } from '../database/databaseUtilities.js';
+import { createAccessCode } from '../database/databaseUtilities.js';
 import { sendAccessCodeEmail } from '../email/sendAccessCodeEmail.js';
+
+interface CheckoutConfig {
+  accessCodePrefix?: string;
+  appName?: string;
+  emailTemplate?: string | null;
+  smtpConfig?: any;
+  [key: string]: any;
+}
+
+interface CheckoutCompletedParams {
+  event: any;
+  supabaseClient: any;
+  config?: CheckoutConfig;
+}
+
+interface CheckoutCompletedResponse {
+  success: boolean;
+  statusCode: number;
+  accessCode?: string;
+  email?: string;
+  error?: string;
+}
 
 export async function handleCheckoutCompleted({
   event,
   supabaseClient,
   config = {},
-}) {
+}: CheckoutCompletedParams): Promise<CheckoutCompletedResponse> {
   const session = event.data.object;
 
   if (!session.customer_email) {
@@ -49,6 +71,7 @@ export async function handleCheckoutCompleted({
     await sendAccessCodeEmail({
       email: email,
       accessCode: accessCode,
+      app_id: appConfig.appName || 'ChAICodes App'
       appName: config.appName || 'ChAICodes App',
       emailTemplate: emailTemplate,
       smtpConfig: config.smtpConfig,
@@ -64,16 +87,17 @@ export async function handleCheckoutCompleted({
       email: email,
     };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error('Error handling checkout completion:', error);
     return {
       success: false,
-      error: error.message,
+      error: message,
       statusCode: 500,
     };
   }
 }
 
-function getDefaultEmailTemplate(config) {
+function getDefaultEmailTemplate(config: CheckoutConfig): string {
   return `
     <h2>Welcome to ${config.appName || 'ChAICodes'}!</h2>
     <p>Thank you for your subscription. Your access code is:</p>

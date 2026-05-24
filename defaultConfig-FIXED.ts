@@ -1,9 +1,43 @@
 /**
- * defaultConfig.js
+ * defaultConfig.ts
  * Default configuration for @chaicodes/stripe-helpers
  */
 
-export const DEFAULT_CONFIG = {
+interface SmtpConfig {
+  host?: string;
+  port?: number | string;
+  secure?: boolean;
+  user?: string;
+  password?: string;
+  from?: string;
+}
+
+interface PriceIds {
+  monthly?: string;
+  annual?: string;
+}
+
+interface AppConfig {
+  appName: string;
+  appUrl: string;
+  supportEmail: string;
+  accessCodePrefix: string;
+  accessCodeLength: number;
+  stripeSecretKey?: string;
+  stripePublicKey?: string;
+  stripeWebhookSecret?: string;
+  priceIds: PriceIds;
+  supabaseUrl?: string;
+  supabaseAnonKey?: string;
+  smtpConfig: SmtpConfig;
+  successUrl?: string;
+  cancelUrl?: string;
+  emailTemplate?: string | null;
+  brandColor: string;
+  logoUrl: string;
+}
+
+export const DEFAULT_CONFIG: AppConfig = {
   // App info
   appName: 'ChAICodes App',
   appUrl: 'https://chaicodes.com',
@@ -50,7 +84,7 @@ export const DEFAULT_CONFIG = {
   logoUrl: 'https://chaicodes.com/logo.png',
 };
 
-export function validateConfig(config) {
+export function validateConfig(config: any): boolean {
   const requiredKeys = [
     'stripeSecretKey',
     'appName',
@@ -66,7 +100,7 @@ export function validateConfig(config) {
   return true;
 }
 
-export function mergeConfig(userConfig = {}) {
+export function mergeConfig(userConfig: Partial<AppConfig> = {}): AppConfig {
   return {
     ...DEFAULT_CONFIG,
     ...userConfig,

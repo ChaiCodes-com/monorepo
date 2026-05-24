@@ -1,17 +1,38 @@
 /**
- * createCheckoutSession.js
+ * createCheckoutSession.ts
  * Creates a Stripe checkout session for subscriptions or one-time purchases
  */
+
+interface CheckoutSessionParams {
+  stripe: any;
+  email: string;
+  billingPeriod?: 'monthly' | 'annual';
+  priceIds?: Record<string, string>;
+  appConfig?: {
+    appUrl?: string;
+    appName?: string;
+  };
+  successUrl?: string;
+  cancelUrl?: string;
+}
+
+interface CheckoutSessionResponse {
+  success: boolean;
+  sessionId?: string;
+  url?: string;
+  session?: any;
+  error?: string;
+}
 
 export async function createCheckoutSession({
   stripe,
   email,
-  billingPeriod = 'annual', // 'monthly' or 'annual'
+  billingPeriod = 'annual',
   priceIds = {},
   appConfig = {},
   successUrl = '',
   cancelUrl = '',
-}) {
+}: CheckoutSessionParams): Promise<CheckoutSessionResponse> {
   if (!stripe) {
     throw new Error('Stripe client is required');
   }
@@ -37,8 +58,8 @@ export async function createCheckoutSession({
           quantity: 1,
         },
       ],
-      success_url: successUrl || `${appConfig.appUrl}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: cancelUrl || `${appConfig.appUrl}/cancel`,
+      success_url: successUrl || `${appConfig.appUrl || ''}/success?session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: cancelUrl || `${appConfig.appUrl || ''}/cancel`,
       metadata: {
         appName: appConfig.appName || 'ChAICodes App',
         billingPeriod: billingPeriod,
@@ -53,10 +74,11 @@ export async function createCheckoutSession({
       session: session,
     };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error('Error creating checkout session:', error);
     return {
       success: false,
-      error: error.message,
+      error: message,
     };
   }
 }

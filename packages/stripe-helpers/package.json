@@ -1,29 +1,39 @@
 {
-  "name": "@chaicodes/stripe-helpers",
-  "version": "1.0.0",
-  "description": "Reusable Stripe payment and subscription utilities for Chaicodes applications",
-  "main": "src/index.js",
+  "name": "@chaicodes-com/stripe-helpers",
+  "version": "1.0.4",
+  "description": "Stripe payment helpers for Chaicodes apps",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "scripts": {
-    "test": "jest"
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "clean": "rm -rf dist"
   },
   "keywords": [
     "stripe",
     "payments",
     "subscriptions",
     "checkout",
-    "webhook",
-    "access-codes",
-    "tokens"
+    "webhooks"
   ],
   "author": "ChAI Wang",
   "license": "MIT",
-  "peerDependencies": {
-    "stripe": "^12.0.0 || ^13.0.0 || ^14.0.0"
+  "devDependencies": {
+    "@types/node": "^25.9.1",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
-    "nodemailer": "^6.9.0"
-  },
-  "devDependencies": {
-    "stripe": "^14.0.0"
+    "nodemailer": "^8.0.7",
+    "stripe": "^22.1.1"
   }
 }

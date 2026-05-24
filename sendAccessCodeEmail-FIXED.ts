@@ -1,7 +1,33 @@
 /**
- * sendAccessCodeEmail.js
+ * sendAccessCodeEmail.ts
  * Sends access code email via SMTP
  */
+
+interface SmtpConfig {
+  host?: string;
+  port?: number;
+  secure?: boolean;
+  user?: string;
+  password?: string;
+  from?: string;
+}
+
+interface EmailParams {
+  email: string;
+  accessCode: string;
+  appName?: string;
+  emailTemplate: string;
+  smtpConfig?: SmtpConfig | null;
+  expiresAt?: string | null;
+}
+
+interface EmailResponse {
+  success: boolean;
+  message?: string;
+  messageId?: string;
+  recipient?: string;
+  error?: string;
+}
 
 export async function sendAccessCodeEmail({
   email,
@@ -10,7 +36,7 @@ export async function sendAccessCodeEmail({
   emailTemplate,
   smtpConfig,
   expiresAt = null,
-}) {
+}: EmailParams): Promise<EmailResponse> {
   if (!email || !accessCode) {
     throw new Error('Email and access code are required');
   }
@@ -60,10 +86,11 @@ export async function sendAccessCodeEmail({
       recipient: email,
     };
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     console.error('Error sending email:', error);
     return {
       success: false,
-      error: error.message,
+      error: message,
     };
   }
 }

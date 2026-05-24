@@ -1,16 +1,21 @@
 /**
- * TermsPage.jsx
+ * TermsPage.tsx
  * Full Terms & Conditions page
  * Includes: Account access, session limits, subscriptions, refund policy, etc.
  */
 
-import React, { useRef } from 'react';
+import { useRef } from 'react';
+import type { CSSProperties } from 'react';
 import { CHAICODES_BRANDING } from '../shared/branding.js';
 
-export function TermsPage({ appName = 'Our Application' }) {
-  const contentRef = useRef(null);
+interface TermsPageProps {
+  appName?: string;
+}
 
-  const bgStyle = {
+export function TermsPage({ appName = 'Our Application' }: TermsPageProps) {
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const bgStyle: CSSProperties = {
     minHeight: '100vh',
     background: 'radial-gradient(ellipse at 15% 0%, rgba(200,16,46,0.14) 0%, transparent 45%), radial-gradient(ellipse at 85% 100%, rgba(145,163,176,0.07) 0%, transparent 45%), linear-gradient(160deg, #1a1214 0%, #221518 45%, #1a1214 100%)',
     fontFamily: "'Lora', Georgia, serif",
@@ -18,7 +23,7 @@ export function TermsPage({ appName = 'Our Application' }) {
     padding: '60px 16px',
   };
 
-  const containerStyle = {
+  const containerStyle: CSSProperties = {
     maxWidth: 820,
     margin: '0 auto',
     background: 'rgba(30,16,18,0.88)',
@@ -28,12 +33,12 @@ export function TermsPage({ appName = 'Our Application' }) {
     boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
   };
 
-  const headerStyle = {
+  const headerStyle: CSSProperties = {
     textAlign: 'center',
     marginBottom: 30,
   };
 
-  const titleStyle = {
+  const titleStyle: CSSProperties = {
     fontFamily: "'Playfair Display',serif",
     fontSize: 28,
     fontWeight: 700,
@@ -42,14 +47,14 @@ export function TermsPage({ appName = 'Our Application' }) {
     margin: 0,
   };
 
-  const dividerStyle = {
+  const dividerStyle: CSSProperties = {
     width: 80,
     height: 1,
     background: 'linear-gradient(90deg,transparent,#C8102E,transparent)',
     margin: '12px auto 0',
   };
 
-  const contentWrapperStyle = {
+  const contentWrapperStyle: CSSProperties = {
     flex: 1,
     overflowY: 'auto',
     maxHeight: '80vh',
@@ -57,7 +62,7 @@ export function TermsPage({ appName = 'Our Application' }) {
     marginBottom: '20px',
   };
 
-  const sectionTitleStyle = {
+  const sectionTitleStyle: CSSProperties = {
     color: '#C8102E',
     marginTop: 20,
     marginBottom: 10,
@@ -65,19 +70,19 @@ export function TermsPage({ appName = 'Our Application' }) {
     fontWeight: 700,
   };
 
-  const textStyle = {
+  const textStyle: CSSProperties = {
     marginBottom: 12,
     fontSize: 13,
     lineHeight: 1.8,
     color: '#e2d8d4',
   };
 
-  const highlightStyle = {
+  const highlightStyle: CSSProperties = {
     color: '#91A3B0',
     fontWeight: 600,
   };
 
-  const listStyle = {
+  const listStyle: CSSProperties = {
     marginBottom: 12,
     paddingLeft: 20,
     color: '#666',
